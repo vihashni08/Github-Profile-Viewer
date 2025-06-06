@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= user.login %>'s GitHub</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1><i class="fab fa-github"></i> GitHub Profile Viewer</h1>
+    <p>Discover and explore GitHub profiles with a beautiful, modern interface</p>
+
+    <form action="/search" method="get">
+      <input type="text" name="username" placeholder="Enter GitHub username" class="search-input" required>
+      <button type="submit" class="search-btn">Search Profile</button>
+    </form>
+
+    <div class="profile-card">
+      <img src="<%= user.avatar_url %>" alt="Profile Picture" />
+      <h2><%= user.name || user.login %></h2>
+      <p>@<%= user.login %></p>
+      <p><%= user.bio || "No bio available" %></p>
+      <p>📍 <%= user.location || "Unknown" %></p>
+      <p>📦 <%= user.public_repos %> Repositories | 👥 <%= user.followers %> Followers • <%= user.following %> Following</p>
+      <p>📅 Joined <%= new Date(user.created_at).toDateString() %></p>
+      <a href="<%= user.html_url %>" target="_blank" class="btn-view">View on GitHub</a>
+    </div>
+
+    <h2>Recent Repositories</h2>
+    <div class="repo-grid">
+      <% repos.forEach(repo => { %>
+        <div class="repo-card">
+          <a href="<%= repo.html_url %>" target="_blank"><%= repo.name %></a>
+          <p><%= repo.description || "No description" %></p>
+          <p>⭐ <%= repo.stargazers_count %> | 🍴 <%= repo.forks_count %> | 🕒 Updated <%= new Date(repo.updated_at).toDateString() %></p>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</body>
+</html>
